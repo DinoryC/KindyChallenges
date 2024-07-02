@@ -1,0 +1,58 @@
+<%- include("../partials/header.ejs") %>
+
+<div class = "parameterToHide">
+    <p id = "para_element1RangeFrom">
+        <%= testParameters.element1RangeFrom %>
+    </p>
+    <p id = "para_element1RangeTo">
+        <%= testParameters.element1RangeTo %>
+    </p>
+    <p id = "para_element2RangeFrom">
+        <%= testParameters.element2RangeFrom %>
+    </p>
+    <p id = "para_element2RangeTo">
+        <%= testParameters.element2RangeTo %>
+    </p>
+    <p id = "para_operator">
+        <%= testParameters.operator %>
+    </p>
+    <p id = "para_numberOfQuestions">
+        <%= testParameters.numberOfQuestions %>
+    </p>
+</div>
+<div class="container mt-5 mb-3">
+    <h1><%= testParameters.displayName %></h1>
+    
+    <p>Enter the answer directly by your keyboard, it will enter next question if you answer it correctly</p>
+</div>
+
+<div class = "row">
+    <div class = "col-md-6 offset-md-3 col-10 offset-1">
+        <div class="card text-center">
+            <div class="card-header">
+              Question 1:
+            </div>
+            <div class="card-body">
+              <h5 class = "correctAnswers"> 2 * 4 = 8<br></h3>
+              <h2 class="card-title" id = "currentQuestion"> 2 * 1 = ?</h5>
+                <br>
+              <h4 class="usersAnswer"> ___ </h5>
+                <br>
+
+
+              <button>Show Answer</button>
+            </div>
+            <div class="card-footer text-muted">
+              8 more questions to go
+            </div>
+          </div>
+    </div>
+</div>
+
+
+<%- include("../partials/footer.ejs") %>
+<!-- jQuery Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- page logic script -->
+<script src="../../../js/multiplicationTestKeyboard.js"></script>

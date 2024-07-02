@@ -1,0 +1,1 @@
+https://colorhunt.co/palette/cdfadbf6fdc3ffcf96ff8080
