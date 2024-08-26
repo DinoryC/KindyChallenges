@@ -1,5 +1,9 @@
 import express from 'express';
+import bodyParser from "body-parser";
+const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const router = express.Router();
 
@@ -19,56 +23,17 @@ router.get("/multiplication", (req, res) => {
     res.render('numeracy/multiplicationTestChoices.ejs', {challengeOptions: multiplicationTestOptions});
 });
 
-router.get("/multiplication/keyboard/2times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[0]});
-});
-
-router.get("/multiplication/keyboard/3times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[1]});
-});
-
-router.get("/multiplication/keyboard/4times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[2]});
-});
-
-router.get("/multiplication/keyboard/5times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[3]});
-});
-
-router.get("/multiplication/keyboard/6times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[4]});
-});
-
-router.get("/multiplication/keyboard/7times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[5]});
-});
-
-router.get("/multiplication/keyboard/8times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[6]});
-});
-
-router.get("/multiplication/keyboard/9times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[7]});
-});
-
-router.get("/multiplication/keyboard/99times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[8]});
-});
-
-router.get("/multiplication/keyboard/1212times", (req, res) => {
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: multiplicationTestOptions[9]});
-});
+router.post("/submitMiltiplication", (req, res) => {
+    const chosenTableIndex = multiplicationTestOptions.findIndex((t) => t.displayName === req.body.chosenTimesTable);
+    var parameters = multiplicationTestOptions[chosenTableIndex];
+    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: parameters});
+})
 
 router.get("/division", (req, res) => {
     res.render('numeracy/divisionTestChoices.ejs');
 });
 
-router.get("/multiplicationKeyboard", (req, res) => {
-    res.red
-})
-
 export default router;
-
 
 function numeracyTestObjects(displayName, htmlId, element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo, operator, numberOfQuestions) {
     this.displayName = displayName;

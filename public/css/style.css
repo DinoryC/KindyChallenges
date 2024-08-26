@@ -33,3 +33,12 @@ body {
 .hideOptions {
   display: none;
 }
+
+#goTest, #choices {
+  width: 100%;
+  height: 2.5rem;
+}
+
+/* #goTest {
+  width: 6rem;
+} */
