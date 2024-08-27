@@ -47,14 +47,14 @@ function numeracyTestObjects(displayName, htmlId, element1RangeFrom, element1Ran
 }
 
 const multiplicationTestOptions = [
-    new numeracyTestObjects("2 Times Table", "2times", 2, 2, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("3 Times Table", "3times", 3, 3, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("4 Times Table", "4times", 4, 4, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("5 Times Table", "5times", 5, 5, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("6 Times Table", "6times", 6, 6, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("7 Times Table", "7times", 7, 7, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("8 Times Table", "8times", 8, 8, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("9 Times Table", "9times", 9, 9, 1, 9, "multiplication", 9),
-    new numeracyTestObjects("Table 9 x 9", "99times", 2, 9, 1, 9, "multiplication", 12),
-    new numeracyTestObjects("Table 12 x 12", "1212times", 2, 12, 1, 12, "multiplication", 12),
+    new numeracyTestObjects("2 Times Table", "2times", 2, 2, 1, 9, "×", 9),
+    new numeracyTestObjects("3 Times Table", "3times", 3, 3, 1, 9, "×", 9),
+    new numeracyTestObjects("4 Times Table", "4times", 4, 4, 1, 9, "×", 9),
+    new numeracyTestObjects("5 Times Table", "5times", 5, 5, 1, 9, "×", 9),
+    new numeracyTestObjects("6 Times Table", "6times", 6, 6, 1, 9, "×", 9),
+    new numeracyTestObjects("7 Times Table", "7times", 7, 7, 1, 9, "×", 9),
+    new numeracyTestObjects("8 Times Table", "8times", 8, 8, 1, 9, "×", 9),
+    new numeracyTestObjects("9 Times Table", "9times", 9, 9, 1, 9, "×", 9),
+    new numeracyTestObjects("Table 9 x 9", "99times", 2, 9, 1, 9, "×", 12),
+    new numeracyTestObjects("Table 12 x 12", "1212times", 2, 12, 1, 12, "×", 12),
 ];
