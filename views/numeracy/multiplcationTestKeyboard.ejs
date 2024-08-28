@@ -39,13 +39,15 @@
             <h2 class="card-title" id = "currentQuestion"> 2 * 1 = ?</h5>
               <br>
               <input type="number" id="userInputValue" placeholder="Your Answer">
+              <div id="confetti-container"></div>
+              
             <!-- <h4 class="usersAnswer" id="userInputValue"> ___ </h5>
               <br> -->
 
 
             <div class="container mt-4">
-              <button type="button" class="btn btn-secondary mr-3">Show Answer</button>
-              <button type="button" class="btn btn-success">Back to all tables</button>
+              <button type="button" class="btn btn-secondary mr-3 confettiEffectSource">Show Answer</button>
+              <button type="button" class="btn btn-success confettiEffectSource">Back to all tables</button>
             </div>
               
           </div>
@@ -64,6 +66,9 @@
 <%- include("../partials/footer.ejs") %>
 <!-- jQuery Library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- lightweight confetti library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 <!-- page logic script -->
 <script src="../../../js/multiplicationTestKeyboard.js"></script>

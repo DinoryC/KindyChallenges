@@ -22,6 +22,12 @@ var currentUserInputAnswer = "";
 
 pageLoadingPreparation();
 startTest();
+logValueEveryHalfSecond();
+
+
+
+
+
 
 function pageLoadingPreparation() {
     getParameters();
@@ -31,6 +37,7 @@ function pageLoadingPreparation() {
     console.log(allAnswers);
     currentQuestion = -1;
     $('#passedQuestions').html(passedQuestionsHtml);
+    confettiSources = $('.confettiEffectSource')
 }
 
 function startTest() {
@@ -51,25 +58,28 @@ function addKeyboardEventListener() {
 
 
 function inputHandler(input) {
-    currentUserInputAnswer += input;
-    $('#userInputValue').val(currentUserInputAnswer);
+    if (input === "Backspace") {
+        currentUserInputAnswer = currentUserInputAnswer.slice(0, -1);
+        $('#userInputValue').val(currentUserInputAnswer);
+    } else {
+        currentUserInputAnswer += input;
+        // $('#userInputValue').val(currentUserInputAnswer);
 
-    console.log("currentUserInputAnswer.length = " + currentUserInputAnswer.length);
-    console.log("allAnswers[currentQuestion].toString() = " + allAnswers[currentQuestion].toString());
-    console.log("allAnswers[currentQuestion].toString().length = " + allAnswers[currentQuestion].toString().length);
-    
+        console.log("currentUserInputAnswer.length = " + currentUserInputAnswer.length);
+        console.log("allAnswers[currentQuestion].toString() = " + allAnswers[currentQuestion].toString());
+        console.log("allAnswers[currentQuestion].toString().length = " + allAnswers[currentQuestion].toString().length);
 
-
-    if (currentUserInputAnswer.length === allAnswers[currentQuestion].toString().length) {
-        if(!checkAnswer()) {
-            WrongAnswer();
-        } else {
-            CorrectAnswer();
-            if (currentQuestion === totalQuestionsCount - 1) {
-                ChallengeSuccess();
-                return;
+        if (currentUserInputAnswer.length === allAnswers[currentQuestion].toString().length) {
+            if(!checkAnswer()) {
+                WrongAnswer();
+            } else {
+                CorrectAnswer();
+                if (currentQuestion === totalQuestionsCount - 1) {
+                    ChallengeSuccess();
+                    return;
+                }
+                nextQuestion();
             }
-            nextQuestion();
         }
     }
 }
@@ -147,6 +157,9 @@ function nextQuestion() {
     $("#passedQuestions").text(passedQuestions);
     $("#currentQuetionNum").text("Question " + (currentQuestion + 1).toString() + ":");
     $("#QuetionsToGo").text(totalQuestionsCount - currentQuestion - 1 + " more to go.");
+
+    currentUserInputAnswer = "";
+    $('#userInputValue').val(currentUserInputAnswer);
 }
 
 function calculate(a, b, operator) {
@@ -180,13 +193,15 @@ function checkAnswer() {
 function WrongAnswer () {
     console.log("Wrong Answer");
     currentUserInputAnswer = "";
-    $('#userInputValue').value = currentUserInputAnswer;
+    $('#userInputValue').val(currentUserInputAnswer);
 }
 
 function CorrectAnswer() {
     console.log("Correct Answer");
 
-    // Do correct animation
+    correctAnswerEffect();
+
+    triggerConfetti(700, 50);
 
     passedQuestionsHtml += 
     allQuestions[currentQuestion][0] + " " 
@@ -201,5 +216,44 @@ function CorrectAnswer() {
 
 function ChallengeSuccess() {
     console.log("Challenge Success");
-    $('#currentQuestion').text("Challenge Success! Congradulations!");
+    triggerConfetti(5000, 150);
+    $('#currentQuestion').text("Challenge Success! Congratulations!");
+}
+
+function logValueEveryHalfSecond() {
+    setInterval(function() {
+      $('#userInputValue').val(currentUserInputAnswer);
+    }, 200);
+}
+
+function correctanswerEffect() {
+    triggerConfetti(700, 50);
+
+    // potential add sound effect?
+}
+
+function challengeSuccessFx() {
+
+}
+
+function triggerConfetti(effectDuration, particalCount) {
+    var animationEnd = Date.now() + effectDuration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        var particleCount = particalCount * (timeLeft / effectDuration);
+        // since particles fall down, start a bit higher than random
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
 }
