@@ -30,7 +30,7 @@
 
   <div class = "row">
     <div class = "col-md-8 offset-md-2 col-10 offset-1">
-        <div class="card text-center">
+        <div class="card text-center" id="testSheetCard">
           <div class="card-header" id="currentQuetionNum">
             Question 1:
           </div>
@@ -39,15 +39,10 @@
             <h2 class="card-title" id = "currentQuestion"> 2 * 1 = ?</h5>
               <br>
               <input type="number" id="userInputValue" placeholder="Your Answer">
-              <div id="confetti-container"></div>
-              
-            <!-- <h4 class="usersAnswer" id="userInputValue"> ___ </h5>
-              <br> -->
-
 
             <div class="container mt-4">
-              <button type="button" class="btn btn-secondary mr-3 confettiEffectSource">Show Answer</button>
-              <button type="button" class="btn btn-success confettiEffectSource">Back to all tables</button>
+              <button type="button" class="btn btn-secondary mr-3 confettiEffectSource" id="showAnswerBtn">Show Answer</button>
+              <button type="button" class="btn btn-success confettiEffectSource" onclick="window.location.href='/numeracyHome/multiplication';">Back to all tables</button>
             </div>
               
           </div>
@@ -59,8 +54,6 @@
   </div>
     
 </div>
-
-
 
 
 <%- include("../partials/footer.ejs") %>

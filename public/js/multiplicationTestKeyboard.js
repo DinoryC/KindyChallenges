@@ -19,15 +19,10 @@ var passedQuestions;
 var passedQuestionsHtml = "";
 
 var currentUserInputAnswer = "";
+var intervalInputUpdater;
 
 pageLoadingPreparation();
 startTest();
-logValueEveryHalfSecond();
-
-
-
-
-
 
 function pageLoadingPreparation() {
     getParameters();
@@ -37,12 +32,20 @@ function pageLoadingPreparation() {
     console.log(allAnswers);
     currentQuestion = -1;
     $('#passedQuestions').html(passedQuestionsHtml);
-    confettiSources = $('.confettiEffectSource')
+
+    $('#showAnswerBtn').on('mousedown', function(event) {
+        $(this).text("Answer is: " + allAnswers[currentQuestion]);
+    });
+
+    $('#showAnswerBtn').on('mouseup', function(event) {
+        $(this).text("Show Answer");
+    });
 }
 
 function startTest() {
     nextQuestion();
     addKeyboardEventListener();
+    inputValueUpdater(150);
 }
 
 function addKeyboardEventListener() {
@@ -55,7 +58,6 @@ function addKeyboardEventListener() {
         }
     });
 }
-
 
 function inputHandler(input) {
     if (input === "Backspace") {
@@ -192,6 +194,7 @@ function checkAnswer() {
 
 function WrongAnswer () {
     console.log("Wrong Answer");
+    wrongAnswerFx();
     currentUserInputAnswer = "";
     $('#userInputValue').val(currentUserInputAnswer);
 }
@@ -214,14 +217,20 @@ function CorrectAnswer() {
 
 function ChallengeSuccess() {
     console.log("Challenge Success");
-    triggerConfetti(5000, 150);
+    challengeSuccessFx();
     $('#currentQuestion').text("Challenge Success! Congratulations!");
+    setTimeout(stopInputValueUpdater, 200);
 }
 
-function logValueEveryHalfSecond() {
-    setInterval(function() {
+function inputValueUpdater(updateInterval) {
+    intervalInputUpdater = setInterval(function() {
+        console.log("Input updater log => input = " + currentUserInputAnswer);
       $('#userInputValue').val(currentUserInputAnswer);
-    }, 200);
+    }, updateInterval);
+}
+
+function stopInputValueUpdater() {
+    clearInterval(intervalInputUpdater);
 }
 
 function correctAnswerEffect() {
@@ -230,8 +239,13 @@ function correctAnswerEffect() {
     // potential add sound effect?
 }
 
-function challengeSuccessFx() {
+function wrongAnswerFx() {
+    triggerShake();
+}
 
+function challengeSuccessFx() {
+    triggerConfetti(5000, 150);
+    
 }
 
 function triggerConfetti(effectDuration, particalCount) {
@@ -255,3 +269,11 @@ function triggerConfetti(effectDuration, particalCount) {
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
     }, 250);
 }
+
+function triggerShake() {
+    $('#testSheetCard').addClass('shake');
+    
+    setTimeout(() => {
+        $('#testSheetCard').removeClass('shake');
+    }, 700);
+  }
