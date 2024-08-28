@@ -222,6 +222,8 @@ function ChallengeSuccess() {
     setTimeout(stopInputValueUpdater, 200);
 
     $('#showAnswerBtn').text("Try again");
+    $('#showAnswerBtn').off('mousedown');
+    $('#showAnswerBtn').off('mouseup');
     $('#showAnswerBtn').on('click', function() {
         location.reload();
     });
