@@ -220,6 +220,11 @@ function ChallengeSuccess() {
     challengeSuccessFx();
     $('#currentQuestion').text("Challenge Success! Congratulations!");
     setTimeout(stopInputValueUpdater, 200);
+
+    $('#showAnswerBtn').text("Try again");
+    $('#showAnswerBtn').on('click', function() {
+        location.reload();
+    });
 }
 
 function inputValueUpdater(updateInterval) {
