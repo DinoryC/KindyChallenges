@@ -201,8 +201,6 @@ function CorrectAnswer() {
 
     correctAnswerEffect();
 
-    triggerConfetti(700, 50);
-
     passedQuestionsHtml += 
     allQuestions[currentQuestion][0] + " " 
     + questionOperator + " " 
@@ -226,7 +224,7 @@ function logValueEveryHalfSecond() {
     }, 200);
 }
 
-function correctanswerEffect() {
+function correctAnswerEffect() {
     triggerConfetti(700, 50);
 
     // potential add sound effect?
