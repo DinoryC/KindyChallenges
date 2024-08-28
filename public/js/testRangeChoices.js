@@ -5,11 +5,6 @@ updateChallengeType();
 
 function getParameters() {
     questionOperator = $("#para_operator").text().trim();
-    console.log(questionOperator);
-    console.log("questionOperator === + :" + (questionOperator === '+'));
-    console.log("questionOperator === - :" + (questionOperator === '-'));
-    console.log("questionOperator === × :" + (questionOperator === '×'));
-    console.log("questionOperator === / :" + (questionOperator === '/'));
 }
 
 function updateChallengeType() {

@@ -27,13 +27,36 @@ router.get("/division", (req, res) => {
     res.render('numeracy/TestRangeChosingPage.ejs', {challengeOptions: devisionTestOptions});
 });
 
-router.post("/submitMiltiplication", (req, res) => {
-    const chosenTableIndex = multiplicationTestOptions.findIndex((t) => t.displayName === req.body.chosenTimesTable);
-    var parameters = multiplicationTestOptions[chosenTableIndex];
-    res.render('numeracy/testPage_multiplcation.ejs', {testParameters: parameters});
+router.post("/submitTestRange", (req, res) => {
+    var parameters = findParameters(req.body);
+
+    res.render('numeracy/numerayTestPage.ejs', {testParameters: parameters});
 })
 
 export default router;
+
+function findParameters(reqBody) {
+    if (!reqBody.chosenTable || !reqBody.operatorInUse) {
+        throw new Error('req.body does not include all necessary properties to generate test sheet');
+    }
+
+    switch (reqBody.operatorInUse) {
+        case '+':
+            var chosenTableIndex = additionTestOptions.findIndex((t) => t.displayName === reqBody.chosenTable);
+            return additionTestOptions[chosenTableIndex];
+        case '-':
+            var chosenTableIndex = subtractionTestOptions.findIndex((t) => t.displayName === reqBody.chosenTable);
+            return subtractionTestOptions[chosenTableIndex];
+        case '×':
+            var chosenTableIndex = multiplicationTestOptions.findIndex((t) => t.displayName === reqBody.chosenTable);
+            return multiplicationTestOptions[chosenTableIndex];
+        case '/':
+            var chosenTableIndex = devisionTestOptions.findIndex((t) => t.displayName === reqBody.chosenTable);
+            return devisionTestOptions[chosenTableIndex];
+        default:
+            throw new Error('Invalid operator passed in, unable to generate test sheet');
+    }
+}
 
 function numeracyTestObjects(displayName, htmlId, element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo, operator, numberOfQuestions) {
     this.displayName = displayName;
