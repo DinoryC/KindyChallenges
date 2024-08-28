@@ -12,26 +12,26 @@ router.get('/', (req, res) => {
 });
 
 router.get("/addition", (req, res) => {
-    res.render('numeracy/additionTestChoices.ejs');
+    res.render('numeracy/TestRangeChosingPage.ejs', {challengeOptions: additionTestOptions});
 });
 
 router.get("/subtraction", (req, res) => {
-    res.render('numeracy/subtractionTestChoices.ejs');
+    res.render('numeracy/TestRangeChosingPage.ejs', {challengeOptions: subtractionTestOptions});
 });
 
 router.get("/multiplication", (req, res) => {
-    res.render('numeracy/multiplicationTestChoices.ejs', {challengeOptions: multiplicationTestOptions});
+    res.render('numeracy/TestRangeChosingPage.ejs', {challengeOptions: multiplicationTestOptions});
+});
+
+router.get("/division", (req, res) => {
+    res.render('numeracy/TestRangeChosingPage.ejs', {challengeOptions: devisionTestOptions});
 });
 
 router.post("/submitMiltiplication", (req, res) => {
     const chosenTableIndex = multiplicationTestOptions.findIndex((t) => t.displayName === req.body.chosenTimesTable);
     var parameters = multiplicationTestOptions[chosenTableIndex];
-    res.render('numeracy/multiplcationTestKeyboard.ejs', {testParameters: parameters});
+    res.render('numeracy/testPage_multiplcation.ejs', {testParameters: parameters});
 })
-
-router.get("/division", (req, res) => {
-    res.render('numeracy/divisionTestChoices.ejs');
-});
 
 export default router;
 
