@@ -81,7 +81,7 @@ const subtractionTestOptions = [
     new numeracyTestObjects("1 digit - 1 digit", "1d1d", 1, 9, 1, 9, "-", 9),
     new numeracyTestObjects("2 digits - 1 digit", "2d1d", 10, 99, 1, 9, "-", 9),
     new numeracyTestObjects("2 digits - 2 digits", "2d2d", 10, 99, 10, 99, "-", 9),
-    new numeracyTestObjects("random 1 or 2 digit", "any1or2d", 1, 99, 1, 99, "-", 9),
+    new numeracyTestObjects("random 1 or 2 digits", "any1or2d", 1, 99, 1, 99, "-", 9),
 ];
 
 const multiplicationTestOptions = [
@@ -107,5 +107,5 @@ const devisionTestOptions = [
     new numeracyTestObjects("Division by 8", "d8", 8, 8, 1, 9, "/", 9),
     new numeracyTestObjects("Division by 9", "d9", 9, 9, 1, 9, "/", 9),
     new numeracyTestObjects("Division by random 2 ~ 9", "d29", 2, 9, 1, 9, "/", 12),
-    new numeracyTestObjects("Division by random 1 ~ 12", "d112", 2, 12, 1, 12, "/", 12),
+    new numeracyTestObjects("Division by random 1 ~ 12", "d112", 1, 12, 1, 12, "/", 12),
 ];

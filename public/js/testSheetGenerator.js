@@ -4,13 +4,12 @@ var element1RangeFrom;
 var element1RangeTo;
 var element2RangeFrom;
 var element2RangeTo;
-var operator;
+var questionOperator;
 var totalQuestionsCount;
 
 var currentQuestion;
 var question1stNum;
 var question2ndNum;
-var questionOperator;
 
 var allQuestions = [];
 var allAnswers = [];
@@ -22,18 +21,7 @@ var currentUserInputAnswer = "";
 var intervalInputUpdater;
 
 pageLoadingPreparation();
-// testSheetPreparation();
 startTest();
-
-function testSheetPreparation() {
-    getParameters();
-    consoleLogParamenter();
-    prepareAllQuestions(element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo);
-    PrepareAllAnswers();
-    currentQuestion = -1;
-
-}
-
 
 function pageLoadingPreparation() {
     getParameters();
@@ -144,10 +132,12 @@ function PrepareAllAnswers() {
     }
 }
 
+// Addend + Addend = Sum or Total
 function prepareAsAdditionChallenges() {
     generateRandomTestSheetQuestions(element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo);
 }
 
+// Minuend - Subtrahend = Difference
 function prepareAsSubtractionChallenges() {
     var subtractionPossibleCombinationCount = generatePossibleCombinationCountForPositiveAnsForSubtractionQs();
 
@@ -177,18 +167,16 @@ function prepareAsSubtractionChallenges() {
 }
 
 function generatePossibleCombinationCountForPositiveAnsForSubtractionQs(){
-    return 10;
-
-}
-
-function factorial(n) {
-    let result = 1;
-    for (let i = 2; i <= n; i++) {
-        result *= i;
+    var possibleCount = 0;
+    for (var subtrahend = element2RangeFrom; subtrahend < element2RangeTo + 1; subtrahend++) {
+        possibleCount += (element1RangeTo - subtrahend + 1);
     }
-    return result;
+
+    console.log("Subtraction possible count = " + possibleCount);
+    return possibleCount;
 }
 
+// Multiplicand * Multiplier = Product
 function prepareAsMultiplicationChallenges() {
     if (element1RangeFrom === element1RangeTo) {
         generateATimesTableWithAHeroNum(element1RangeFrom, element2RangeFrom, element2RangeTo);
@@ -197,28 +185,44 @@ function prepareAsMultiplicationChallenges() {
     }
 }
 
+
+// Divident / Divisor = Quotient...Remainder
+function prepareAsDivisionChallenges() {
+    if (element1RangeFrom === element1RangeTo) {
+        var randomNumArray = generateANonRepeatedRandomNumArray(element2RangeFrom, element2RangeTo);
+        for (var i = 0; i < randomNumArray.length; i++) {
+            allQuestions.push([randomNumArray[i] * element1RangeFrom, element1RangeFrom]);
+        }
+    } else {
+        generateRandomTestSheetQuestions(element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo);
+        for (var i = 0; i < allQuestions.length; i++) {
+            allQuestions[i][0] = allQuestions[i][0] * allQuestions[i][1];
+        }
+    }
+}
+
+function generateANonRepeatedRandomNumArray(fromNumInc, toNumInc) {
+    arrayToShuffle = [];
+    for (var i = fromNumInc; i < toNumInc + 1; i++) {
+        arrayToShuffle.push(i);
+    }
+
+    for (let i = arrayToShuffle.length - 1; i > 0; i--) {
+        // Generate a random index
+        let j = Math.floor(Math.random() * (i + 1));
+        // Swap elements at i and j
+        [arrayToShuffle[i], arrayToShuffle[j]] = [arrayToShuffle[j], arrayToShuffle[i]];
+    }
+
+    return arrayToShuffle;
+}
+
 function generateATimesTableWithAHeroNum(firstNumfrom, SecondNumFrom, SecondNumTo) {
     var randomNumArray = generateANonRepeatedRandomNumArray(SecondNumFrom, SecondNumTo);
     for (var i = 0; i < randomNumArray.length; i++) {
         allQuestions.push([firstNumfrom, randomNumArray[i]]);
     }
     console.log(allQuestions);
-}
-
-function generateANonRepeatedRandomNumArray(fromNumInc, toNumInc) {
-    orderedArray = [];
-    for (var i = fromNumInc; i < toNumInc + 1; i++) {
-        orderedArray.push(i);
-    }
-
-    for (let i = orderedArray.length - 1; i > 0; i--) {
-        // Generate a random index
-        let j = Math.floor(Math.random() * (i + 1));
-        // Swap elements at i and j
-        [orderedArray[i], orderedArray[j]] = [orderedArray[j], orderedArray[i]];
-    }
-
-    return orderedArray;
 }
 
 function generateRandomTestSheetQuestions(firstNumfrom, firstNumTo, SecondNumFrom, SecondNumTo) {
@@ -251,7 +255,6 @@ function generateRandomTestSheetQuestions(firstNumfrom, firstNumTo, SecondNumFro
 
 function getPossibleCombinationCount(multiplicantFromInc, multiplicantToInc, multiplierFromInc, multiplierToInc) {
     return ((multiplicantToInc - multiplicantFromInc + 1) * (multiplierToInc - multiplierFromInc + 1));
-
 }
 
 function getRandomNumInc(fromInc, toInc) {
@@ -267,7 +270,9 @@ function nextQuestion() {
     question1stNum = allQuestions[currentQuestion][0];
     question2ndNum = allQuestions[currentQuestion][1];
 
-    $("#currentQuestion").text(question1stNum + " " + questionOperator + " " + question2ndNum + " = ?");
+    var displayOperator = (questionOperator === "/") ? "÷" : questionOperator;
+
+    $("#currentQuestion").text(question1stNum + " " + displayOperator + " " + question2ndNum + " = ?");
     $("#passedQuestions").text(passedQuestions);
     $("#currentQuetionNum").text("Question " + (currentQuestion + 1).toString() + ":");
     $("#QuetionsToGo").text(totalQuestionsCount - currentQuestion - 1 + " more to go.");
