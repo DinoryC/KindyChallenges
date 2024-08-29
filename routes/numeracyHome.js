@@ -71,17 +71,16 @@ function numeracyTestObjects(displayName, htmlId, element1RangeFrom, element1Ran
 
 const additionTestOptions = [
     new numeracyTestObjects("1 digit + 1 digit", "1d1d", 1, 9, 1, 9, "+", 9),
-    new numeracyTestObjects("1 digit + 2 digit", "1d2d", 1, 9, 10, 99, "+", 9),
-    new numeracyTestObjects("2 digit + 1 digit", "2d1d", 10, 99, 1, 9, "+", 9),
-    new numeracyTestObjects("2 digit + 2 digit", "2d2d", 10, 99, 10, 99, "+", 9),
-    new numeracyTestObjects("random 1 or 2 digit", "any1or2d", 1, 99, 1, 99, "+", 9),
+    new numeracyTestObjects("1 digit + 2 digits", "1d2d", 1, 9, 10, 99, "+", 9),
+    new numeracyTestObjects("2 digits + 1 digit", "2d1d", 10, 99, 1, 9, "+", 9),
+    new numeracyTestObjects("2 digits + 2 digits", "2d2d", 10, 99, 10, 99, "+", 9),
+    new numeracyTestObjects("random 1 or 2 digits", "any1or2d", 1, 99, 1, 99, "+", 9),
 ];
 
 const subtractionTestOptions = [
     new numeracyTestObjects("1 digit - 1 digit", "1d1d", 1, 9, 1, 9, "-", 9),
-    new numeracyTestObjects("1 digit - 2 digit", "1d2d", 1, 9, 10, 99, "-", 9),
-    new numeracyTestObjects("2 digit - 1 digit", "2d1d", 10, 99, 1, 9, "-", 9),
-    new numeracyTestObjects("2 digit - 2 digit", "2d2d", 10, 99, 10, 99, "-", 9),
+    new numeracyTestObjects("2 digits - 1 digit", "2d1d", 10, 99, 1, 9, "-", 9),
+    new numeracyTestObjects("2 digits - 2 digits", "2d2d", 10, 99, 10, 99, "-", 9),
     new numeracyTestObjects("random 1 or 2 digit", "any1or2d", 1, 99, 1, 99, "-", 9),
 ];
 
@@ -94,8 +93,8 @@ const multiplicationTestOptions = [
     new numeracyTestObjects("7 Times Table", "7times", 7, 7, 1, 9, "×", 9),
     new numeracyTestObjects("8 Times Table", "8times", 8, 8, 1, 9, "×", 9),
     new numeracyTestObjects("9 Times Table", "9times", 9, 9, 1, 9, "×", 9),
-    new numeracyTestObjects("Table 9 x 9", "99times", 2, 9, 1, 9, "×", 12),
-    new numeracyTestObjects("Table 12 x 12", "1212times", 2, 12, 1, 12, "×", 12),
+    new numeracyTestObjects("Table 9 x 9", "99times", 2, 9, 1, 9, "×", 15),
+    new numeracyTestObjects("Table 12 x 12", "1212times", 2, 12, 1, 12, "×", 15),
 ];
 
 const devisionTestOptions = [
@@ -107,6 +106,6 @@ const devisionTestOptions = [
     new numeracyTestObjects("Division by 7", "d7", 7, 7, 1, 9, "/", 9),
     new numeracyTestObjects("Division by 8", "d8", 8, 8, 1, 9, "/", 9),
     new numeracyTestObjects("Division by 9", "d9", 9, 9, 1, 9, "/", 9),
-    new numeracyTestObjects("Division by 2~9", "d29", 2, 9, 1, 9, "/", 12),
-    new numeracyTestObjects("Division by 1~12", "d112", 2, 12, 1, 12, "/", 12),
+    new numeracyTestObjects("Division by random 2 ~ 9", "d29", 2, 9, 1, 9, "/", 12),
+    new numeracyTestObjects("Division by random 1 ~ 12", "d112", 2, 12, 1, 12, "/", 12),
 ];

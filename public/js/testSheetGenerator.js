@@ -22,12 +22,23 @@ var currentUserInputAnswer = "";
 var intervalInputUpdater;
 
 pageLoadingPreparation();
+// testSheetPreparation();
 startTest();
+
+function testSheetPreparation() {
+    getParameters();
+    consoleLogParamenter();
+    prepareAllQuestions(element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo);
+    PrepareAllAnswers();
+    currentQuestion = -1;
+
+}
+
 
 function pageLoadingPreparation() {
     getParameters();
     consoleLogParamenter();
-    PrepareAllQuestions(element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo);
+    prepareAllQuestions();
     PrepareAllAnswers();
     console.log(allAnswers);
     currentQuestion = -1;
@@ -50,7 +61,8 @@ function startTest() {
 
 function addKeyboardEventListener() {
     document.addEventListener('keydown', function(event) {
-        if (event.key >= "0" && event.key <= "9" || event.key === "Backspace") {
+        console.log(event.key);
+        if (event.key >= "0" && event.key <= "9" || event.key === "Backspace" || event.key === "-") {
             console.log("event handler keydown " + event.key);
             inputHandler(event.key);
         } else {
@@ -104,17 +116,84 @@ function consoleLogParamenter() {
     console.log("numberOfQuestions = " + totalQuestionsCount);
 }
 
-function PrepareAllQuestions(firstNumfrom, firstNumTo, SecondNumFrom, SecondNumTo) {
-    if (firstNumfrom === firstNumTo) {
-        generateATimesTableWithAHeroNum(firstNumfrom, SecondNumFrom, SecondNumTo);
-    } else {
-        generateRandomTimesTable(firstNumfrom, firstNumTo, SecondNumFrom, SecondNumTo);
+function prepareAllQuestions() {
+    switch (questionOperator) {
+        case '+':
+            prepareAsAdditionChallenges();
+            break;
+        case '-':
+            prepareAsSubtractionChallenges();
+            break;
+        case '×':
+            prepareAsMultiplicationChallenges();
+            break;
+        case '/':
+            prepareAsDivisionChallenges();
+            break;
+        default:
+            throw new Error('Invalid operator for test sheet generator');
     }
+
+    console.log("Print all questions: ");
+    console.log(allQuestions);
 }
 
 function PrepareAllAnswers() {
     for (var i = 0; i < allQuestions.length; i++) {
         allAnswers.push(calculate(allQuestions[i][0], allQuestions[i][1], questionOperator));
+    }
+}
+
+function prepareAsAdditionChallenges() {
+    generateRandomTestSheetQuestions(element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo);
+}
+
+function prepareAsSubtractionChallenges() {
+    var subtractionPossibleCombinationCount = generatePossibleCombinationCountForPositiveAnsForSubtractionQs();
+
+    if (subtractionPossibleCombinationCount >= totalQuestionsCount) {
+        while (allQuestions.length < totalQuestionsCount) {
+            var subtrahend = getRandomInt(element2RangeFrom, element2RangeTo);
+            var minuend = getRandomInt(subtrahend, element1RangeTo)
+    
+            if (!isExistingPair(allQuestions, [minuend, subtrahend])) {
+                allQuestions.push([minuend, subtrahend]);
+            }
+        }
+    } else {
+        while (allQuestions.length < subtractionPossibleCombinationCount) {
+            var i = getRandomNumInc(firstNumfrom, firstNumTo);
+            var j = getRandomNumInc(SecondNumFrom, SecondNumTo);
+    
+            if (!isExistingPair(allQuestions, [i, j])) {
+                allQuestions.push([i, j]);
+            }
+        }
+
+        while (allQuestions.length < totalQuestionsCount) {
+            allQuestions.push(allQuestions[getRandomNumInc(0, subtractionPossibleCombinationCount -1)]);
+        }
+    }
+}
+
+function generatePossibleCombinationCountForPositiveAnsForSubtractionQs(){
+    return 10;
+
+}
+
+function factorial(n) {
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+function prepareAsMultiplicationChallenges() {
+    if (element1RangeFrom === element1RangeTo) {
+        generateATimesTableWithAHeroNum(element1RangeFrom, element2RangeFrom, element2RangeTo);
+    } else {
+        generateRandomTestSheetQuestions(element1RangeFrom, element1RangeTo, element2RangeFrom, element2RangeTo);
     }
 }
 
@@ -124,11 +203,6 @@ function generateATimesTableWithAHeroNum(firstNumfrom, SecondNumFrom, SecondNumT
         allQuestions.push([firstNumfrom, randomNumArray[i]]);
     }
     console.log(allQuestions);
-
-}
-
-function generateRandomTimesTable(firstNumfrom, firstNumTo, SecondNumFrom, SecondNumTo) {
-
 }
 
 function generateANonRepeatedRandomNumArray(fromNumInc, toNumInc) {
@@ -137,17 +211,55 @@ function generateANonRepeatedRandomNumArray(fromNumInc, toNumInc) {
         orderedArray.push(i);
     }
 
-    return shuffleArray(orderedArray);
-}
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+    for (let i = orderedArray.length - 1; i > 0; i--) {
         // Generate a random index
         let j = Math.floor(Math.random() * (i + 1));
         // Swap elements at i and j
-        [array[i], array[j]] = [array[j], array[i]];
+        [orderedArray[i], orderedArray[j]] = [orderedArray[j], orderedArray[i]];
     }
-    return array;
+
+    return orderedArray;
+}
+
+function generateRandomTestSheetQuestions(firstNumfrom, firstNumTo, SecondNumFrom, SecondNumTo) {
+    var possibleCombinationCount = getPossibleCombinationCount(firstNumfrom, firstNumTo, SecondNumFrom, SecondNumTo);
+    
+    if (possibleCombinationCount >= totalQuestionsCount) {
+        while (allQuestions.length < totalQuestionsCount) {
+            var i = getRandomNumInc(firstNumfrom, firstNumTo);
+            var j = getRandomNumInc(SecondNumFrom, SecondNumTo);
+    
+            if (!isExistingPair(allQuestions, [i, j])) {
+                allQuestions.push([i, j]);
+            }
+        }
+    } else {
+        while (allQuestions.length < possibleCombinationCount) {
+            var i = getRandomNumInc(firstNumfrom, firstNumTo);
+            var j = getRandomNumInc(SecondNumFrom, SecondNumTo);
+    
+            if (!isExistingPair(allQuestions, [i, j])) {
+                allQuestions.push([i, j]);
+            }
+        }
+
+        while (allQuestions.length < totalQuestionsCount) {
+            allQuestions.push(allQuestions[getRandomNumInc(0, possibleCombinationCount -1)]);
+        }
+    }
+}
+
+function getPossibleCombinationCount(multiplicantFromInc, multiplicantToInc, multiplierFromInc, multiplierToInc) {
+    return ((multiplicantToInc - multiplicantFromInc + 1) * (multiplierToInc - multiplierFromInc + 1));
+
+}
+
+function getRandomNumInc(fromInc, toInc) {
+    return fromInc + (Math.floor(Math.random() * (toInc - fromInc + 1)));
+}
+
+function isExistingPair(arr, pair) {
+    return arr.some(subArr => subArr[0] === pair[0] && subArr[1] === pair[1]);
 }
 
 function nextQuestion() {
@@ -168,10 +280,10 @@ function calculate(a, b, operator) {
     switch (operator) {
         case '+':
             return a + b;
-        case '×':
-            return a * b;
         case '-':
             return a - b;
+        case '×':
+            return a * b;
         case '/':
             return a / b;
         default:
